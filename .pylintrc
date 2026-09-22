@@ -8,8 +8,9 @@ init-hook="from pylint.config import find_default_config_files; import sys; sys.
 generated-members=numpy.*, torch.*
 
 
-[pylint.messages_control]
+[MESSAGES CONTROL]
 disable=missing-function-docstring, line-too-long, import-error,
     too-many-arguments, too-many-locals, too-many-statements, too-many-branches, too-few-public-methods,
     too-many-instance-attributes, fixme, import-outside-toplevel, logging-fstring-interpolation,
-    too-many-positional-arguments, possibly-used-before-assignment
+    too-many-positional-arguments, possibly-used-before-assignment,
+    duplicate-code
