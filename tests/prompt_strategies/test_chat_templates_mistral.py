@@ -1,3 +1,4 @@
+# pylint: disable=duplicate-code
 """Test chat templates for mistral-common wrapper tokenizer"""
 
 import unittest

@@ -1,3 +1,4 @@
+# pylint: disable=duplicate-code
 """
 tests for chat_template prompt strategy
 """
