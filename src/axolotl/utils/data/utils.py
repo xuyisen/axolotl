@@ -4,8 +4,8 @@ import contextlib
 import functools
 import hashlib
 import time
+from collections.abc import Callable
 from enum import Enum
-from typing import Callable
 
 import huggingface_hub
 import numpy as np
