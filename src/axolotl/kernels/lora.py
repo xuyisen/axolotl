@@ -67,8 +67,8 @@ def matmul_lora(
     X: torch.Tensor,
     W: torch.Tensor,
     W_quant: QuantState,
-    A: torch.Tensor,
-    B: torch.Tensor,
+    A: torch.Tensor | None,
+    B: torch.Tensor | None,
     s: float,
     out: torch.Tensor | None = None,
 ) -> torch.Tensor:
@@ -101,7 +101,7 @@ def matmul_lora(
     if W_quant is not None:
         del W
 
-    if A is not None:
+    if A is not None and B is not None:
         A, B = A.t(), B.t()
         out += (X @ A.to(dtype)) @ (s * B.to(dtype))
 
@@ -751,17 +751,25 @@ class LoRA_O(torch.autograd.Function):
 
         # Weight projection
         dY_X = X.t() @ dY
-        d_A = S * dY_X @ B
-        d_B = S * A @ dY_X
+        d_A = S * dY_X @ B if B is not None else None
+        d_B = S * A @ dY_X if A is not None else None
 
         # Get derivative for dX
         W = dequantize(W.t(), W_quant)
         dX = dY @ W.t()
         del W
-        dX += dY @ B.to(dtype) @ (S * A.to(dtype))
+        if A is not None and B is not None:
+            dX += dY @ B.to(dtype) @ (S * A.to(dtype))
 
         # W, W_quant, A, B, S
-        return dX.view(batch, seq_len, hd), None, None, d_A.t(), d_B.t(), None
+        return (
+            dX.view(batch, seq_len, hd),
+            None,
+            None,
+            d_A.t() if d_A is not None else None,
+            d_B.t() if d_B is not None else None,
+            None,
+        )
 
 
 def apply_lora_o(self, X: torch.Tensor) -> torch.Tensor:
