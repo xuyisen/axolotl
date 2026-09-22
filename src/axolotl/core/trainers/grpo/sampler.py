@@ -4,7 +4,8 @@ sequence parallelism functionality; i.e., duplicating data across ranks in the s
 sequence parallel group.
 """
 
-from typing import Iterator, Sized
+from collections.abc import Sized
+from typing import Iterator
 
 import torch
 from torch.utils.data import Sampler
