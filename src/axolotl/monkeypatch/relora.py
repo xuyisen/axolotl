@@ -1,5 +1,6 @@
 """Implements the ReLoRA training procedure from https://arxiv.org/abs/2307.05695, minus the initial full fine-tune."""
 
+# pylint: disable=duplicate-code
 import glob
 import json
 import os.path

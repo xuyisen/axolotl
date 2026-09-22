@@ -1,5 +1,6 @@
 """Module for custom LRScheduler class"""
 
+# pylint: disable=duplicate-code
 import math
 from functools import partial
 from typing import Sequence
