@@ -1,0 +1,8 @@
+#!/home/yisenxu/rabeya/mini-swe-agent-ci-based/results/miniswe-agent/bidirectional/l1_l2_l3_deepseek-v4-flash/L1_L2_L3/ee19007ba4a51af406a9e80d2b1b53ffc7d713a7/testbed/.venv-axolotl-494/bin/python3
+# -*- coding: UTF-8 -*-
+from __future__ import print_function, division, absolute_import
+
+from numba.misc.numba_entry import main
+
+if __name__ == "__main__":
+    main()
