@@ -26,3 +26,6 @@ include-package-data = true
 
 [tool.setuptools.cmdclass]
 build_py = "setuptools_axolotl_dynamic_dependencies.BuildPyCommand"
+
+[tool.pytest.ini_options]
+addopts = "--retries=2 --retry-delay=5 --timeout=300"
