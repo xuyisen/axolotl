@@ -16,7 +16,7 @@ try:
     is_ampere = torch.cuda.get_device_capability()[0] >= 8
 except RuntimeError:
     is_ampere = False
-if cuda != "12.1" and cuda != "11.8" and cuda != "12.4":
+if cuda != "12.1" and cuda != "11.8" and cuda != "12.4" and cuda != "12.6" and cuda != "12.8":
     raise RuntimeError(f"CUDA = {cuda} not supported!")
 if v <= V("2.1.0"):
     raise RuntimeError(f"Torch = {v} too old!")
@@ -30,12 +30,16 @@ elif v < V("2.4.0"):
     x = "cu{}{}-torch230"
 elif v < V("2.5.0"):
     x = "cu{}{}-torch240"
-elif v < V("2.6.0"):
+elif v < V("2.5.1"):
     x = "cu{}{}-torch250"
+elif v < V("2.6.0"):
+    x = "cu{}{}-torch251"
+elif v < V("2.7.0"):
+    x = "cu{}{}-torch260"
 else:
-    raise RuntimeError(f"Torch = {v} too new!")
+    x = "cu{}{}-torch270"
 x = x.format(cuda.replace(".", ""), "-ampere" if is_ampere else "")
 uv_prefix = "uv " if use_uv else ""
 print(
-    f'{uv_prefix}pip install unsloth-zoo==2024.12.1 && {uv_prefix}pip install --no-deps "unsloth[{x}]==2024.12.4"'
+    f'{uv_prefix}pip install unsloth-zoo==2025.12.8 && {uv_prefix}pip install --no-deps "unsloth[{x}]==2025.12.10"'
 )
