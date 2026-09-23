@@ -1100,6 +1100,8 @@ class AxolotlConfigWCapabilities(AxolotlInputConfig):
     @model_validator(mode="before")
     @classmethod
     def check_qat_config(cls, data):
+        if data is None:
+            return data
         qat_cfg = data.get("qat", {})
         if not qat_cfg:
             return data
@@ -1129,6 +1131,8 @@ class AxolotlConfigWCapabilities(AxolotlInputConfig):
     @model_validator(mode="before")
     @classmethod
     def check_fsdp_torch_version(cls, data):
+        if data is None:
+            return data
         env_capabilities = data.get("env_capabilities", {})
         torch_version = env_capabilities.get("torch_version")
 
