@@ -1,6 +1,8 @@
-# StableMax integration entry point
+"""
+StableMax integration entry point.
 
-import torch
+Provides a numerically stable alternative to softmax cross-entropy loss.
+"""
 
 from axolotl.integrations.base import BasePlugin
 
