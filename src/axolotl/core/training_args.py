@@ -235,6 +235,12 @@ class AxolotlTrainingMixins:
 
     # end of multi-modal section
 
+    dataset_num_proc: int | None = field(
+        default=None,
+        metadata={"help": "Number of processes to use for dataset processing"},  
+    )
+
+
 
 @dataclass
 class AxolotlTrainingArguments(AxolotlTrainingMixins, TrainingArguments):
