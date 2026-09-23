@@ -3,6 +3,7 @@ This module provides functionality for selecting chat templates based on user ch
 These templates are used for formatting messages in a conversation.
 """
 
+from .base import _CHAT_TEMPLATES  # noqa: F401
 from .base import (
     extract_chat_template_args,
     get_chat_template,
