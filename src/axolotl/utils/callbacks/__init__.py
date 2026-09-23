@@ -15,7 +15,10 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.distributed as dist
-import wandb
+try:
+    import wandb
+except ImportError:
+    wandb = None
 from datasets import load_dataset
 from optimum.bettertransformer import BetterTransformer
 from tqdm import tqdm
@@ -30,7 +33,7 @@ from transformers import (
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR, IntervalStrategy
 from trl.models import unwrap_model_for_generation
 
-from axolotl.utils import is_comet_available, is_mlflow_available
+from axolotl.utils import is_comet_available, is_mlflow_available, is_wandb_available
 from axolotl.utils.bench import log_gpu_memory_usage
 from axolotl.utils.callbacks.perplexity import Perplexity
 from axolotl.utils.distributed import (
@@ -733,7 +736,7 @@ def log_prediction_callback_factory(trainer: Trainer, tokenizer, logger: str):
                             "Predicted Completion (trainer.prediction_step)"
                         ].append(pred_step_text)
                         row_index += 1
-                if logger == "wandb":
+                if logger == "wandb" and wandb is not None:
                     # type: ignore[attr-defined]
                     wandb.run.log(
                         {
@@ -784,6 +787,9 @@ class SaveAxolotlConfigtoWandBCallback(TrainerCallback):
         control: TrainerControl,
         **kwargs,  # pylint: disable=unused-argument
     ):
+        if wandb is None:
+            LOG.warning("wandb is not available, skipping SaveAxolotlConfigtoWandBCallback")
+            return control
         if is_main_process():
             try:
                 # sync config to top level in run, cannot delete file right away because wandb schedules it to be synced even w/policy = 'now', so let OS delete it later.

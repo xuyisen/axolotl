@@ -1,6 +1,4 @@
-"""
-Basic utils for Axolotl
-"""
+"""Basic utils for Axolotl"""
 
 import importlib.util
 import os
@@ -15,6 +13,10 @@ def is_mlflow_available():
 
 def is_comet_available():
     return importlib.util.find_spec("comet_ml") is not None
+
+
+def is_wandb_available():
+    return importlib.util.find_spec("wandb") is not None
 
 
 # pylint: disable=duplicate-code
